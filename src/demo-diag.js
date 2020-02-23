@@ -69,7 +69,7 @@ SimpleDialog.propTypes = {
 };
 
 export default function SimpleDialogDemo() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(0);
   const [selectedValue, setSelectedValue] = React.useState(emails[1]);
 
   const handleClickOpen = () => {
@@ -88,7 +88,7 @@ export default function SimpleDialogDemo() {
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
         Open simple dialog
       </Button>
-      <SimpleDialog selectedValue={selectedValue} open={open} onClose={handleClose} />
+      <SimpleDialog selectedValue={selectedValue} open={open} onClose={handleClose} />     
     </div>
   );
 }

@@ -1,7 +1,7 @@
+import React, {Component} from 'react';
+import ReactDOM from 'react-dom'; 
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Demo from './demo';
+import Main from './main';
 
-ReactDOM.render(<Demo />, document.querySelector('#root'));
-    
+
+ReactDOM.render(<Main />, document.querySelector('#root'));
