@@ -6,7 +6,8 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import TextField from '@material-ui/core/TextField';
-import { Button } from '@material-ui/core';
+import { Button, TableCell } from '@material-ui/core';
+import InputAdornment from '@material-ui/core/InputAdornment';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -32,12 +33,17 @@ export default function FiltrPanel(props) {
           <Typography className={classes.heading} align='right'>Фильтр</Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-        	<TextField id="filtr_by_name" label="Username" />
-        	<TextField id="filtr_by_web" label="website" />
+          <TextField  id="filtr_by_name" /*variant="outlined"*/ label="Username" InputProps={{ startAdornment: <InputAdornment position="start"> </InputAdornment>}} />
+        	<TextField id="filtr_by_web" /*variant="outlined"*/ label="website" InputProps={{ startAdornment: <InputAdornment position="start"> </InputAdornment>}} />
         </ExpansionPanelDetails>
-	          <Button onClick={props.onApplyFiltrs}>Применить</Button>
-            <Button onClick={props.onResetFiltrs}>Сбросить фильтр</Button>
-      </ExpansionPanel>    
+        <table border="0" cellpadding="0" align="left">
+          <row >
+	          <TableCell></TableCell>
+            <TableCell><Button size="small" onClick={props.onApplyFiltrs}>Применить</Button></TableCell>
+            <TableCell><Button size="small" onClick={props.onResetFiltrs}>Сбросить фильтр</Button></TableCell>
+          </row>
+        </table>
+      </ExpansionPanel>
     </div>
   );
 }

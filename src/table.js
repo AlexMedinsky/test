@@ -40,21 +40,23 @@ export default function CustomizedTables(props) {
       <Table id="myTable" className={classes.table} aria-label="customized table">
         <TableHead>{props.data.selected_id} 
           <TableRow>
-            <StyledTableCell>Name</StyledTableCell>
-            <StyledTableCell align="right">UserName</StyledTableCell>
-            <StyledTableCell align="right">email</StyledTableCell>
-            <StyledTableCell align="right">website</StyledTableCell>
+            <StyledTableCell align="center">№</StyledTableCell>
+            <StyledTableCell align="left">Name</StyledTableCell>
+            <StyledTableCell align="left">UserName</StyledTableCell>
+            <StyledTableCell align="left">email</StyledTableCell>
+            <StyledTableCell align="left">website</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {
-		props.data.rows.map(row => (
-				        	<StyledTableRow key={row.name} onClick={()=>props.handleOnClick(row.user_id)}>
- 				        		<StyledTableCell component="th" scope="row"> {row.name} </StyledTableCell>
-							<StyledTableCell align="right">{row.user_name}</StyledTableCell>
-							<StyledTableCell align="right">{row.email}</StyledTableCell>
-							<StyledTableCell align="right">{row.website}</StyledTableCell>
-						</StyledTableRow>
+		props.data.rows.map( (row, ind)  => (
+				        	                <StyledTableRow key={row.name} onClick={()=>props.handleOnClick(row.user_id)}>
+ 				        		                  <StyledTableCell align="center"> {ind+1} </StyledTableCell>
+                                      <StyledTableCell align="left">{row.name} </StyledTableCell>
+                                      <StyledTableCell align="left">{row.user_name}</StyledTableCell>
+                                      <StyledTableCell align="left">{row.email}</StyledTableCell>
+                                      <StyledTableCell align="left">{row.website}</StyledTableCell>
+                      						</StyledTableRow>
           			            )
 				    )
 	   }

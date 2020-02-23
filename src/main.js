@@ -25,19 +25,23 @@ class Main extends Component
 				     }
 				this.handleOnTableClick = this.handleOnTableClick.bind(this)
 				this.onResetFiltrs = this.onResetFiltrs.bind(this)
+				this.onApplyFiltrs = this.onApplyFiltrs.bind(this)
+				
 		    }
-
+		
+	result_request = [];
 	handleOnTableClick(id) {  this.setState( { selected_id : id } ); }
+	
 
 	componentDidMount()
 	{
-	    let res = [];
 	    fetch('https://jsonplaceholder.typicode.com/users')
 		.then( response => response.json() )
 		.then( json => { 
 				   
-				   json.map( (r) => { res.push(
-													{	user_id: r.id, 
+				   json.map( (r) => { return this.result_request.push(
+													{	
+														user_id: r.id, 
 														name: r.name,
 														user_name: r.username,
 														email: r.email,
@@ -46,14 +50,15 @@ class Main extends Component
 							      			  );
 						    		}
 					   		);
-				   this.setState( { rows: res } )
+				   this.setState( { rows: this.result_request } )
 				}
 				
 		     )
 		.catch( error => this.setState( { rows: [{ user_id: null, name: "Ошибка загрузки данных https://jsonplaceholder (" + error + ")", user_name: null, email: null, website: null }] } ) );
 
 		ReactDOM.render(<FiltrPanel 
-									onResetFiltrs={this.onResetFiltrs}  
+									onResetFiltrs={this.onResetFiltrs}
+									onApplyFiltrs={this.onApplyFiltrs}
 																		/>, document.querySelector('#filtr'));
 	}
 
@@ -69,9 +74,27 @@ class Main extends Component
 			 
 	onResetFiltrs()
 	{
-		document.getElementById("filtr_by_name").label = "234234324";
-		document.getElementById("filtr_by_web").value = "********";
-	}		 
+		document.getElementById("filtr_by_name").value = "";
+		document.getElementById("filtr_by_web").value = "";
+		this.setState( { rows: this.result_request } )
+	}
+	onApplyFiltrs()
+	{
+		var filtrByName = document.getElementById("filtr_by_name").value.toLowerCase();
+		var filtrBySite = document.getElementById("filtr_by_web").value.toLowerCase();
+		/*if(!filtrByName && !filtrBySite)  
+		{
+			alert("необходимо указать фильтры!");
+			return;
+		}*/
+		
+		this.setState( { rows: this.result_request.filter( item => { return (!filtrByName || item.user_name.toLowerCase().indexOf(filtrByName) >=0 ) && 
+																			(!filtrBySite || item.website.toLowerCase().indexOf(filtrBySite) >=0) 
+																   }
+														 ) 
+					   } 
+					 )
+	}			 
 }
 
 export default Main
