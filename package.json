@@ -1,15 +1,15 @@
 {
   "title": "test",
   "devDependencies": {
-    "react-scripts": "latest"
+    "react-scripts": "^3.4.0"
   },
   "description": "test",
   "dependencies": {
     "@material-ui/core": "latest",
     "@material-ui/icons": "^4.9.1",
     "prop-types": "latest",
-    "react": "latest",
-    "react-dom": "latest"
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
   },
   "name": "test",
   "version": "0.0.0",

@@ -3,7 +3,7 @@
   "devDependencies": {
     "react-scripts": "latest"
   },
-  "description": "https://github.com/mui-org/material-ui/blob/master/docs/src/pages/components/dialogs/SimpleDialog.js",
+  "description": "https://github.com/mui-org/material-ui/blob/master/docs/src/pages/components/dialogs/SimpleDialog.js, https://github.com/mui-org/material-ui/blob/master/docs/src/pages/components/tables/CustomizedTables.js",
   "dependencies": {
     "react-dom": "latest",
     "react": "latest",

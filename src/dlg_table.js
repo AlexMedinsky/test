@@ -36,28 +36,24 @@ const useStyles = makeStyles({
 
 export default function CustomizedTables(props) {
   const classes = useStyles();
-
+ 
   return (
     <TableContainer component={Paper}>
       <Table id="myTable" className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
             <StyledTableCell align="center">№</StyledTableCell>
-            <StyledTableCell align="left">Name</StyledTableCell>
-            <StyledTableCell align="left">UserName</StyledTableCell>
-            <StyledTableCell align="left">email</StyledTableCell>
-            <StyledTableCell align="left">website</StyledTableCell>
+            <StyledTableCell align="left">Поручение</StyledTableCell>
+            <StyledTableCell align="left">Статус</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {
-		props.rows.map( (row, ind)  => (
+		props.data.rows.map( (row, ind)  => (
 				        	                <StyledTableRow key={row.name} onDoubleClick={()=>props.handleOnClick(row.user_id, row.user_name)}>
- 				        		                  <StyledTableCell align="center"> {row.user_id>0 ? ind+1 : null} </StyledTableCell>
+ 				        		                  <StyledTableCell align="center"> {ind+1} </StyledTableCell>
                                       <StyledTableCell align="left">{row.name} </StyledTableCell>
-                                      <StyledTableCell align="left">{row.user_name}</StyledTableCell>
-                                      <StyledTableCell align="left">{row.email}</StyledTableCell>
-                                      <StyledTableCell align="left">{row.website}</StyledTableCell>
+                                      <StyledTableCell align="left">{row.status}</StyledTableCell>
                       						</StyledTableRow>
           			            )
 				    )

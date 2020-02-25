@@ -1,7 +1,10 @@
+"Use strict"
+
 import React, {Component} from "react"
 import ReactDOM from 'react-dom'; 
 import MyTable from './table'
 import FiltrPanel from './filtr_panel'
+import MyDialog from './dialog';
 
 
 class Main extends Component 
@@ -10,28 +13,33 @@ class Main extends Component
 			{
 				super()
 				this.state = {
-								users_data: [],
 								rows:   [
 											{ 
-												user_id: 333,
 												name: 'Загрузка данных https://jsonplaceholder ...',
-												user_name: '',
-												email: '',
-												website: ''
 											}
 										],
-								selected_id: null,
-								handleOnClick: this.handleOnTableClick
-				     }
+								sel_user_id: null,
+								sel_user_name: null,
+								handleOnClick: this.handleOnTableClick,
+								dialogOpened: false
+				   			 }
 				this.handleOnTableClick = this.handleOnTableClick.bind(this)
 				this.onResetFiltrs = this.onResetFiltrs.bind(this)
 				this.onApplyFiltrs = this.onApplyFiltrs.bind(this)
-				
+				this.onDialogClose = this.onDialogClose.bind(this)
 		    }
 		
 	result_request = [];
-	handleOnTableClick(id) {  this.setState( { selected_id : id } ); }
+	handleOnTableClick(id, name) 
+	{  
+		
+		this.setState( { sel_user_id : id, sel_user_name: name, dialogOpened : id ? true : true } );
+	}
 	
+	onDialogClose()
+	{
+		this.setState( { dialogOpened : false } ) 
+	}
 
 	componentDidMount()
 	{
@@ -45,7 +53,8 @@ class Main extends Component
 														name: r.name,
 														user_name: r.username,
 														email: r.email,
-														website: r.website
+														website: r.website,
+														todo: null
 													}
 							      			  );
 						    		}
@@ -54,7 +63,12 @@ class Main extends Component
 				}
 				
 		     )
-		.catch( error => this.setState( { rows: [{ user_id: null, name: "Ошибка загрузки данных https://jsonplaceholder (" + error + ")", user_name: null, email: null, website: null }] } ) );
+		.catch( error => this.setState( { rows: [{ 	name: "Ошибка загрузки данных https://jsonplaceholder (" + error + ")",
+												}] 
+										} 
+									  )
+									  /* здесь можно еще задизэблить фильтр-панель, но, наверное, это лишнее */					  
+			  );
 
 		ReactDOM.render(<FiltrPanel 
 									onResetFiltrs={this.onResetFiltrs}
@@ -65,10 +79,19 @@ class Main extends Component
 	render()
 		 {
 			return (
-						<MyTable 
-							data={this.state}
-							handleOnClick={this.handleOnTableClick}
-						/>
+						<React.Fragment>
+							<MyTable 
+								rows={this.state.rows}
+								handleOnClick={this.handleOnTableClick}
+							/>
+							<MyDialog 
+								open={this.state.dialogOpened}
+								handleClose={this.onDialogClose}
+								user_id={this.state.sel_user_id}
+								user_name={this.state.sel_user_name}
+							/>
+						</React.Fragment>
+
 				)
 			 }
 			 
@@ -94,7 +117,7 @@ class Main extends Component
 														 ) 
 					   } 
 					 )
-	}			 
+	}	
 }
 
 export default Main
