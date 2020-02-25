@@ -66,7 +66,7 @@ const DialogActions = withStyles(theme => ({
 function SimpleDialog(props) 
 {
   //const classes = useStyles();
-  const { onClose, /*selectedValue,*/ open, user_name, user_id } = props;
+  const {  /*selectedValue,*/ open, onClose, user_name, user_id, user_toDo } = props;
   const [filtrState, setFiltrState] = React.useState(false);
 
   const handleClose = () => 
@@ -78,34 +78,7 @@ function SimpleDialog(props)
   {
     onClose(value);
   };*/
-
-  fetch('https://jsonplaceholder.typicode.com/todos?userId=' + user_id)
-  .then( response => response.json() )
-  .then( json => { 
-         
-         json.map( (r) => { return this.result_request.push(
-                                                              {	
-                                                                user_id: r.id, 
-                                                                name: r.name,
-                                                                user_name: r.username,
-                                                                email: r.email,
-                                                                website: r.website,
-                                                                todo: null
-                                                              }
-                                                           );
-                            }
-                  );
-        setFiltrState( !filtrState )
-      }
-      
-       )
-  .catch( error => this.setState( { rows: [{ 	name: "Ошибка загрузки данных https://jsonplaceholder (" + error + ")",
-                                          }] 
-                                  } 
-                                )
-                  /* здесь можно еще задизэблить фильтр-панель, но, наверное, это лишнее */					  
-      );
-
+  alert ("user_toDo in Dialog:  " + user_toDo);
 
   return (
     <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
@@ -123,7 +96,7 @@ function SimpleDialog(props)
           </ListItem>
         ))}
         </List>*/}
-        {/*<DlgTable />*/}
+        <DlgTable user_toDo/>
       </DialogContent>
       <DialogActions>
         <Button autoFocus onClick={handleClose} color="primary">

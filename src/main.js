@@ -20,6 +20,7 @@ class Main extends Component
 										],
 								sel_user_id: null,
 								sel_user_name: null,
+								sel_user_toDo: null,
 								handleOnClick: this.handleOnTableClick,
 								dialogOpened: false
 				   			 }
@@ -30,10 +31,42 @@ class Main extends Component
 		    }
 		
 	result_request = [];
+
 	handleOnTableClick(id, name) 
 	{  
-		
-		this.setState( { sel_user_id : id, sel_user_name: name, dialogOpened : id ? true : true } );
+		var tmp_toDo = id > 0? (this.result_request.filter(e => {return e.user_id===id}))[0].toDo : null;
+		if(id>0 && !tmp_toDo)
+		{
+			tmp_toDo = [];
+			fetch('https://jsonplaceholder.typicode.com/todos?userId=' + id)
+			.then( response => response.json() )
+			.then( json => { 
+								json.map( (r) => { return tmp_toDo.push(  {	
+																				id: r.id, 
+																				title: r.title,
+																				completed: r.completed
+																			}
+																	);
+													}
+										);
+								alert('sel_user_toDo:  ' + tmp_toDo.length);
+								this.setState( { sel_user_toDo: tmp_toDo } );		
+							}
+				)
+			.catch( 
+					error => tmp_toDo.push( { title: "Ошибка загрузки данных https://jsonplaceholder (" + error + ")" } )	  
+				  )
+			.catch( 
+					this.setState( { sel_user_toDo: tmp_toDo } )	  
+				  )
+		}
+
+		this.setState(  { 	
+							sel_user_id : id, 
+							sel_user_name: name, 
+							dialogOpened : id ? true : false 
+						} 
+					);
 	}
 	
 	onDialogClose()
@@ -47,20 +80,20 @@ class Main extends Component
 		.then( response => response.json() )
 		.then( json => { 
 				   
-				   json.map( (r) => { return this.result_request.push(
-													{	
-														user_id: r.id, 
-														name: r.name,
-														user_name: r.username,
-														email: r.email,
-														website: r.website,
-														todo: null
-													}
-							      			  );
-						    		}
-					   		);
-				   this.setState( { rows: this.result_request } )
-				}
+							json.map( (r) => { return this.result_request.push(
+																{	
+																	user_id: r.id, 
+																	name: r.name,
+																	user_name: r.username,
+																	email: r.email,
+																	website: r.website,
+																	toDo: null
+																}
+														);
+												}
+										);
+							this.setState( { rows: this.result_request } )
+						}
 				
 		     )
 		.catch( error => this.setState( { rows: [{ 	name: "Ошибка загрузки данных https://jsonplaceholder (" + error + ")",
@@ -79,19 +112,18 @@ class Main extends Component
 	render()
 		 {
 			return (
-						<React.Fragment>
+						!this.state.dialogOpened ?
 							<MyTable 
 								rows={this.state.rows}
 								handleOnClick={this.handleOnTableClick}
 							/>
-							<MyDialog 
+							: <MyDialog 
 								open={this.state.dialogOpened}
 								handleClose={this.onDialogClose}
 								user_id={this.state.sel_user_id}
 								user_name={this.state.sel_user_name}
+								user_toDo={this.state.sel_user_toDo}
 							/>
-						</React.Fragment>
-
 				)
 			 }
 			 

@@ -49,15 +49,17 @@ export default function CustomizedTables(props) {
         </TableHead>
         <TableBody>
           {
-		props.data.rows.map( (row, ind)  => (
-				        	                <StyledTableRow key={row.name} onDoubleClick={()=>props.handleOnClick(row.user_id, row.user_name)}>
- 				        		                  <StyledTableCell align="center"> {ind+1} </StyledTableCell>
-                                      <StyledTableCell align="left">{row.name} </StyledTableCell>
-                                      <StyledTableCell align="left">{row.status}</StyledTableCell>
-                      						</StyledTableRow>
-          			            )
-				    )
-	   }
+              !props.user_toDo || !props.user_toDo.length ? "" :
+                  props.user_toDo.map( (row, ind)  => (
+                                                        <StyledTableRow key={row.name} /*onDoubleClick={()=>props.handleOnClick(row.user_id, row.user_name)} */>
+                                                            <StyledTableCell align="center"> {ind+1} </StyledTableCell>
+                                                            <StyledTableCell align="left">{row.title} </StyledTableCell>
+                                                            <StyledTableCell align="left">{row.completed}</StyledTableCell>
+                                                        </StyledTableRow>
+          			                                    )
+                                      )
+              
+	        }
         </TableBody>
       </Table>
     </TableContainer>
