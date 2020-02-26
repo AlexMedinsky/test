@@ -63,16 +63,27 @@ const DialogActions = withStyles(theme => ({
   },
 }))(MuiDialogActions);
 
+let current_toDo = [];
+function handleChexBoxChange(ind)
+{
+  if(ind < 0 || ind >= current_toDo.length || !current_toDo[ind])
+  {
+    alert("Error index bound!");
+    return;
+  }
+  current_toDo[ind].completed = !(current_toDo[ind].completed);
+}
+
 export default function SimpleDialog(props) 
 {
   const { handleClose, user_name, user_id, user_toDo } = props;
+  current_toDo = user_toDo;
 
   return (
-    <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open="true">
-      <DialogTitle onClose={handleClose} id="customized-dialog-title">ToDo for Username {user_name} (id={user_id})</DialogTitle>
+    <Dialog onClose={()=>{handleClose(current_toDo)}} aria-labelledby="customized-dialog-title" open="true">
+      <DialogTitle onClose={()=>{handleClose(current_toDo)}} id="customized-dialog-title">ToDo for {user_name}:</DialogTitle>
       <DialogContent dividers>
-      user_toDo.length=
-      {/* <List
+       {/* <List
         {emails.map(email => (
           <ListItem button onClick={() => handleListItemClick(email)} key={email}>
             <ListItemAvatar>
@@ -84,13 +95,14 @@ export default function SimpleDialog(props)
           </ListItem>
         ))}
         </List>*/
-        user_toDo.length
+       
         }
-        <DlgTable user_toDo={user_toDo}/>
+        <DlgTable user_toDo={user_toDo}
+                  handleChexBoxChange={handleChexBoxChange
+        }/>
       </DialogContent>
-      
       <DialogActions>
-        <Button autoFocus onClick={handleClose} color="primary">
+        <Button autoFocus onClick={()=>{handleClose(current_toDo)}} color="primary">
           Закрыть
         </Button>
       </DialogActions>

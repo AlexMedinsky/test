@@ -48,6 +48,7 @@ const GreenCheckbox = withStyles({
 
 export default function CustomizedTables(props) {
   const classes = useStyles();
+  const [changed, setChanged] = React.useState(false);
 
   return (
     <TableContainer component={Paper}>
@@ -67,11 +68,14 @@ export default function CustomizedTables(props) {
                                                             <StyledTableCell align="center">{row.id> 0 ? ind+1 : null} </StyledTableCell>
                                                             <StyledTableCell align="left">{row.title} </StyledTableCell>
                                                             <StyledTableCell align="left">
-                                                                <GreenCheckbox
-                                                                    checked={row.completed}
-                                                                    //onChange={handleChange('checkedG')}
-                                                                    value="checkedG"
-                                                                />
+                                                                {row.id>0 ? <GreenCheckbox
+                                                                                checked={row.completed}
+                                                                                onChange={()=>{ props.handleChexBoxChange(ind); 
+                                                                                                setChanged(!changed)}
+                                                                                              }
+                                                                                value="checkedG"
+                                                                            />
+                                                                          : ""}
                                                             </StyledTableCell>
                                                         </StyledTableRow>
           			                                    )

@@ -47,6 +47,7 @@ export default function CustomizedTables(props) {
             <StyledTableCell align="left">UserName</StyledTableCell>
             <StyledTableCell align="left">email</StyledTableCell>
             <StyledTableCell align="left">website</StyledTableCell>
+            <StyledTableCell align="left">toDo`s</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -55,9 +56,10 @@ export default function CustomizedTables(props) {
 				        	                <StyledTableRow key={row.name} onDoubleClick={()=>props.handleOnClick(row.user_id, row.user_name)}>
  				        		                  <StyledTableCell align="center"> {row.user_id>0 ? ind+1 : null} </StyledTableCell>
                                       <StyledTableCell align="left">{row.name} </StyledTableCell>
-                                      <StyledTableCell align="left">{row.user_name}</StyledTableCell>
+                                      <StyledTableCell align="left">{row.user_name} </StyledTableCell>
                                       <StyledTableCell align="left">{row.email}</StyledTableCell>
                                       <StyledTableCell align="left">{row.website}</StyledTableCell>
+                                      <StyledTableCell align="left">{row.toDo ? "("+row.toDo.length+")" : ""}</StyledTableCell>
                       						</StyledTableRow>
           			            )
 				    )

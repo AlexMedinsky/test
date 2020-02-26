@@ -9,9 +9,9 @@ import MyDialog from './dialog';
 
 class Main extends Component 
 {
-	constructor()
+	constructor(props)
 			{
-				super()
+				super(props)
 				this.state = {
 								rows:   [
 											{ 
@@ -39,17 +39,18 @@ class Main extends Component
 		{
 			tmp_toDo = [ {title: "Загрузка данных с сервера..."} ];
 			fetch('https://jsonplaceholder.typicode.com/todos?userId=' + id)
-			.then( response => response.json(),  tmp_toDo = [] )
+			.then( response => response.json())
 			.then( json => { 
-								json.map( (r) => { return tmp_toDo.push(	{	
+								tmp_toDo = [];
+								json.map( (r) => { tmp_toDo.push(	{	
 																				id: r.id, 
 																				title: r.title,
-																				completed: r.completed ? 1 : 0
-																			}
+																				completed: r.completed																			}
 																		);
 												}
 										);
-
+								if(!tmp_toDo.length)
+									tmp_toDo = [ {title: "ToDo`s list is empty."} ];			
 								this.setState( { sel_user_toDo: tmp_toDo } );
 							}
 				)
@@ -60,34 +61,22 @@ class Main extends Component
 			  		)
 		}
 
-		//alert("callback 0: sel_user_id="+this.sel_user_id)
 		this.setState( { 	
-							sel_user_id : 4, //id, 
+							sel_user_id : id, 
 							sel_user_name: name, 
 							dialogOpened : id ? true : false,
 							sel_user_toDo: tmp_toDo
-						}/*, 
-						()=>{ alert("callback 1: sel_user_id="+this.sel_user_id)}
-						*/
+						}
 					 );
-		/*this.setState(  { 	
-							sel_user_toDo: tmp_toDo
-						}, 
-						()=>{ alert("callback 2: sel_user_id="+this.sel_user_id)}
-					 );*/
 	}
 	
-	onDialogClose()
+	onDialogClose(new_toDo)
 	{
-		//alert("this.sel_user_id:" + this.sel_user_id);
-		let index = this.result_request.findIndex(item => {return item.user_id===this.sel_user_id});
+		let index = this.result_request.findIndex(item => {return item.user_id===this.state.sel_user_id});
 		
-		//alert("index: "+index);
 		if(index >= 0)
 		{
-			//alert("ок");
-			let tmp = this.result_request;
-			tmp[index].toDo = [];
+			this.result_request[index].toDo = new_toDo;
 		}
 		
 		this.setState( { dialogOpened : false } ) 
@@ -95,7 +84,7 @@ class Main extends Component
 
 	/*componentDidUpdate()
 	{
-		alert("componentDidUpdate: sel_user_id="+this.sel_user_id);
+		alert("componentDidUpdate: sel_user_id="+this.state.sel_user_id);
 	}
 	*/
 
