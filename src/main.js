@@ -15,7 +15,7 @@ class Main extends Component
 				this.state = {
 								rows:   [
 											{ 
-												name: 'Загрузка данных https://jsonplaceholder ...',
+												name: 'Загрузка данных с сервера...',
 											}
 										],
 								sel_user_id: null,
@@ -34,46 +34,70 @@ class Main extends Component
 
 	handleOnTableClick(id, name) 
 	{  
-		var tmp_toDo = id > 0? (this.result_request.filter(e => {return e.user_id===id}))[0].toDo : null;
-		if(id>0 && !tmp_toDo)
+		let tmp_toDo = id > 0? (this.result_request.filter(e => {return e.user_id===id}))[0].toDo : null;
+		if(id > 0 && !tmp_toDo)
 		{
-			tmp_toDo = [];
+			tmp_toDo = [ {title: "Загрузка данных с сервера..."} ];
 			fetch('https://jsonplaceholder.typicode.com/todos?userId=' + id)
-			.then( response => response.json() )
+			.then( response => response.json(),  tmp_toDo = [] )
 			.then( json => { 
-								json.map( (r) => { return tmp_toDo.push(  {	
+								json.map( (r) => { return tmp_toDo.push(	{	
 																				id: r.id, 
 																				title: r.title,
-																				completed: r.completed
+																				completed: r.completed ? 1 : 0
 																			}
-																	);
-													}
+																		);
+												}
 										);
-								//alert('main: user_toDo.length:  ' + tmp_toDo.length);
+
 								this.setState( { sel_user_toDo: tmp_toDo } );
-								//alert('after main: user_toDo.length:  ' + tmp_toDo.length);
 							}
 				)
-			.catch( 
-					error => tmp_toDo.push( { title: "Ошибка загрузки данных https://jsonplaceholder (" + error + ")" } )	  
-				  )
-			.catch( 
-					this.setState( { sel_user_toDo: tmp_toDo } )	  
-				  )
+			.catch	( error => {
+									tmp_toDo = [ { title: "Ошибка загрузки данных https://jsonplaceholder" } ];
+									this.setState( { sel_user_toDo: tmp_toDo } )
+								}	  
+			  		)
 		}
 
-		this.setState(  { 	
-							sel_user_id : id, 
+		//alert("callback 0: sel_user_id="+this.sel_user_id)
+		this.setState( { 	
+							sel_user_id : 4, //id, 
 							sel_user_name: name, 
-							dialogOpened : id ? true : false 
-						} 
-					);
+							dialogOpened : id ? true : false,
+							sel_user_toDo: tmp_toDo
+						}/*, 
+						()=>{ alert("callback 1: sel_user_id="+this.sel_user_id)}
+						*/
+					 );
+		/*this.setState(  { 	
+							sel_user_toDo: tmp_toDo
+						}, 
+						()=>{ alert("callback 2: sel_user_id="+this.sel_user_id)}
+					 );*/
 	}
 	
 	onDialogClose()
 	{
+		//alert("this.sel_user_id:" + this.sel_user_id);
+		let index = this.result_request.findIndex(item => {return item.user_id===this.sel_user_id});
+		
+		//alert("index: "+index);
+		if(index >= 0)
+		{
+			//alert("ок");
+			let tmp = this.result_request;
+			tmp[index].toDo = [];
+		}
+		
 		this.setState( { dialogOpened : false } ) 
 	}
+
+	/*componentDidUpdate()
+	{
+		alert("componentDidUpdate: sel_user_id="+this.sel_user_id);
+	}
+	*/
 
 	componentDidMount()
 	{

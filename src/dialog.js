@@ -71,6 +71,7 @@ export default function SimpleDialog(props)
     <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open="true">
       <DialogTitle onClose={handleClose} id="customized-dialog-title">ToDo for Username {user_name} (id={user_id})</DialogTitle>
       <DialogContent dividers>
+      user_toDo.length=
       {/* <List
         {emails.map(email => (
           <ListItem button onClick={() => handleListItemClick(email)} key={email}>
@@ -82,7 +83,9 @@ export default function SimpleDialog(props)
             <ListItemText primary={email} />
           </ListItem>
         ))}
-        </List>*/}
+        </List>*/
+        user_toDo.length
+        }
         <DlgTable user_toDo={user_toDo}/>
       </DialogContent>
       

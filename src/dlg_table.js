@@ -9,6 +9,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import Checkbox from '@material-ui/core/Checkbox';
+import { green } from '@material-ui/core/colors';
 
 const StyledTableCell = withStyles(theme => ({
   head: {
@@ -34,6 +36,16 @@ const useStyles = makeStyles({
   },
 });
 
+const GreenCheckbox = withStyles({
+  root: {
+    color: green[400],
+    '&$checked': {
+      color: green[600],
+    },
+  },
+  checked: {},
+})(props => <Checkbox color="default" {...props} />);
+
 export default function CustomizedTables(props) {
   const classes = useStyles();
 
@@ -52,9 +64,15 @@ export default function CustomizedTables(props) {
               !props.user_toDo || !props.user_toDo.length ? "" :
                   props.user_toDo.map( (row, ind)  => (
                                                         <StyledTableRow key={row.name} /*onDoubleClick={()=>props.handleOnClick(row.user_id, row.user_name)} */>
-                                                            <StyledTableCell align="center"> {ind+1} </StyledTableCell>
+                                                            <StyledTableCell align="center">{row.id> 0 ? ind+1 : null} </StyledTableCell>
                                                             <StyledTableCell align="left">{row.title} </StyledTableCell>
-                                                            <StyledTableCell align="left">{row.completed}</StyledTableCell>
+                                                            <StyledTableCell align="left">
+                                                                <GreenCheckbox
+                                                                    checked={row.completed}
+                                                                    //onChange={handleChange('checkedG')}
+                                                                    value="checkedG"
+                                                                />
+                                                            </StyledTableCell>
                                                         </StyledTableRow>
           			                                    )
                                       )
