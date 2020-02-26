@@ -37,8 +37,6 @@ const useStyles = makeStyles({
 export default function CustomizedTables(props) {
   const classes = useStyles();
 
-  alert("Dlg: user_toDo="+props.user_toDo + ", user_id="+props.user_id+ ", user_name="+props.user_name)
-
   return (
     <TableContainer component={Paper}>
       <Table id="myTable" className={classes.table} aria-label="customized table">

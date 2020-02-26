@@ -1,7 +1,7 @@
 "Use strict"
 
 import React from 'react';
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 //import { makeStyles } from '@material-ui/core/styles';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -63,26 +63,13 @@ const DialogActions = withStyles(theme => ({
   },
 }))(MuiDialogActions);
 
-function SimpleDialog(props) 
+export default function SimpleDialog(props) 
 {
-  //const classes = useStyles();
-  const {  /*selectedValue, open,*/ onClose, user_name, user_id, user_toDo } = props;
-  //const [filtrState, setFiltrState] = React.useState(false);
-
-  /*const handleClose = () => 
-  {
-    onClose(/*selectedValue* /);
-  };
-*/
-  /*const handleListItemClick = value => 
-  {
-    onClose(value);
-  };*/
-  alert("Dlg: user_toDo="+props.user_toDo + ", user_name="+props.user_name)
+  const { handleClose, user_name, user_id, user_toDo } = props;
 
   return (
-    <Dialog onClose={onClose} aria-labelledby="customized-dialog-title" open="true">
-      <DialogTitle onClose={onClose} id="customized-dialog-title">ToDo for Username {user_name} (id={user_id})</DialogTitle>
+    <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open="true">
+      <DialogTitle onClose={handleClose} id="customized-dialog-title">ToDo for Username {user_name} (id={user_id})</DialogTitle>
       <DialogContent dividers>
       {/* <List
         {emails.map(email => (
@@ -96,10 +83,11 @@ function SimpleDialog(props)
           </ListItem>
         ))}
         </List>*/}
-        <DlgTable user_toDo={props.user_toDo}/>
+        <DlgTable user_toDo={user_toDo}/>
       </DialogContent>
+      
       <DialogActions>
-        <Button autoFocus onClick={onClose} color="primary">
+        <Button autoFocus onClick={handleClose} color="primary">
           Закрыть
         </Button>
       </DialogActions>
@@ -107,31 +95,4 @@ function SimpleDialog(props)
   );
 }
 
-SimpleDialog.propTypes = {
-  open: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired,
-  //selectedValue: PropTypes.string.isRequired,
-};
 
-export default function SimpleDialogDemo(props) 
-{
-  /*const [open, setOpen] = React.useState(props.open);
-  //const [selectedValue, setSelectedValue] = React.useState(emails[1]);
-
-  const handleClickOpen = () => 
-  {
-    setOpen(true);
-  };
-
-  const handleClose = value => 
-  {
-    setOpen(false);
-    //setSelectedValue(value);
-  };
-*/
-  return (
-      <div>
-        <SimpleDialog /*selectedValue={selectedValue}*/ open={props.open} onClose={props.handleClose} user_name={props.user_name} user_id={props.user_id} />
-      </div>    
-  );
-}
