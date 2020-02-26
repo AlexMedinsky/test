@@ -49,8 +49,9 @@ class Main extends Component
 																	);
 													}
 										);
-								alert('sel_user_toDo:  ' + tmp_toDo.length);
-								this.setState( { sel_user_toDo: tmp_toDo } );		
+								//alert('main: user_toDo.length:  ' + tmp_toDo.length);
+								this.setState( { sel_user_toDo: tmp_toDo } );
+								//alert('after main: user_toDo.length:  ' + tmp_toDo.length);
 							}
 				)
 			.catch( 
@@ -110,22 +111,24 @@ class Main extends Component
 	}
 
 	render()
-		 {
-			return (
-						!this.state.dialogOpened ?
-							<MyTable 
-								rows={this.state.rows}
-								handleOnClick={this.handleOnTableClick}
-							/>
-							: <MyDialog 
-								open={this.state.dialogOpened}
-								handleClose={this.onDialogClose}
-								user_id={this.state.sel_user_id}
-								user_name={this.state.sel_user_name}
-								user_toDo={this.state.sel_user_toDo}
-							/>
+	{
+		return (
+					<React.Fragment>
+						<MyTable 
+							rows={this.state.rows}
+							handleOnClick={this.handleOnTableClick}
+						/> 
+		  				{!this.state.dialogOpened ? "" : 
+												<MyDialog 
+													handleClose={this.onDialogClose}
+													user_id={this.state.sel_user_id}
+													user_name={this.state.sel_user_name}
+													user_toDo={this.state.sel_user_toDo}
+												/>
+						}
+					</React.Fragment>
 				)
-			 }
+	}
 			 
 	onResetFiltrs()
 	{

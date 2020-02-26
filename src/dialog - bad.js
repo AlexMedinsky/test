@@ -78,7 +78,7 @@ function SimpleDialog(props)
   {
     onClose(value);
   };*/
-  alert("Dlg: user_toDo="+props.user_toDo + ", user_name="+props.user_name)
+  //alert("Dlg: user_toDo="+user_toDo + ", user_name="+user_name)
 
   return (
     <Dialog onClose={onClose} aria-labelledby="customized-dialog-title" open="true">
@@ -96,7 +96,7 @@ function SimpleDialog(props)
           </ListItem>
         ))}
         </List>*/}
-        <DlgTable user_toDo={props.user_toDo}/>
+        <DlgTable user_toDo={user_toDo}/>
       </DialogContent>
       <DialogActions>
         <Button autoFocus onClick={onClose} color="primary">
