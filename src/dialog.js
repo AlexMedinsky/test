@@ -80,6 +80,7 @@ export default function SimpleDialog(props)
   const { handleClose, user_name, user_toDo } = props;
   current_toDo = user_toDo;
   const [filter, setFilter] = React.useState(1);
+  const [changed, setChanged] = React.useState(false);
   
   return (
     <Dialog maxWidth="500" onClose={()=>{handleClose(current_toDo)}} aria-labelledby="customized-dialog-title" open="true">
@@ -94,7 +95,9 @@ export default function SimpleDialog(props)
 
             <DlgTable user_toDo={user_toDo}
                       filter={filter}
-                      handleChexBoxChange={handleChexBoxChange} 
+                      handleChexBoxChange={handleChexBoxChange}
+                      changed={changed}
+                      setChanged={setChanged}
             />
 
         </DialogContent>

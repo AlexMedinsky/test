@@ -31,6 +31,7 @@ class Main extends Component
 				this.onResetFiltrs = this.onResetFiltrs.bind(this)
 				this.onApplyFiltrs = this.onApplyFiltrs.bind(this)
 				this.onDialogClose = this.onDialogClose.bind(this)
+				this.OnDeleteUser = this.OnDeleteUser.bind(this)
 		    }
 		
 	result_request = [];
@@ -79,7 +80,7 @@ class Main extends Component
 		
 		if(index >= 0)
 		{
-			this.result_request[index].toDo = new_toDo;
+			this.result_request[index].toDo = new_toDo.filter(e=>e.id>0);
 		}
 		
 		this.setState( { dialogOpened : false } ) 
@@ -132,6 +133,7 @@ class Main extends Component
 						<MyTable 
 							rows={this.state.rows}
 							handleOnClick={this.handleOnTableClick}
+							OnDeleteUser={this.OnDeleteUser}
 						/> 
 		  				{!this.state.dialogOpened ? "" : 
 												<MyDialog 
@@ -190,6 +192,17 @@ class Main extends Component
 						}
 					 )
 	}	
+
+	OnDeleteUser(user_id)
+	{
+		let ind = this.result_request.findIndex(e=>e.user_id===user_id);
+		
+		if(ind >= 0)
+			this.result_request.splice(ind, 1);
+	
+		this.setState( { rows: this.state.rows.filter(e=>e.user_id!==user_id) });
+		//this.forceUpdate();
+	}
 }
 
 export default Main

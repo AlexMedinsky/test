@@ -9,6 +9,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const StyledTableCell = withStyles(theme => ({
   head: {
@@ -47,7 +49,7 @@ export default function CustomizedTables(props) {
             <StyledTableCell align="left">UserName</StyledTableCell>
             <StyledTableCell align="left">email</StyledTableCell>
             <StyledTableCell align="left">website</StyledTableCell>
-            <StyledTableCell align="left">toDo`s</StyledTableCell>
+            <StyledTableCell align="left">...</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -59,7 +61,12 @@ export default function CustomizedTables(props) {
                                       <StyledTableCell align="left">{row.user_name} </StyledTableCell>
                                       <StyledTableCell align="left">{row.email}</StyledTableCell>
                                       <StyledTableCell align="left">{row.website}</StyledTableCell>
-                                      <StyledTableCell align="left">{row.toDo ? "("+row.toDo.length+")" : ""}</StyledTableCell>
+                                      <StyledTableCell align="left">{row.user_id>0 ? 
+                                                                                      <IconButton aria-label="delete" onClick={()=>props.OnDeleteUser(row.user_id)}>
+                                                                                        <DeleteIcon />
+                                                                                      </IconButton>
+                                                                                    : null}
+                                      </StyledTableCell>
                       						</StyledTableRow>
           			            )
 				    )

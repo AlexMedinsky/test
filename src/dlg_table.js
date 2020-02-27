@@ -48,8 +48,7 @@ const MyCheckbox = withStyles({
 
 export default function CustomizedTables(props) {
   const classes = useStyles();
-  const [changed, setChanged] = React.useState(false);
-  const { user_toDo, filter, handleChexBoxChange } = props;
+  const { user_toDo, filter, handleChexBoxChange, changed, setChanged } = props;
 
   return (
     <TableContainer component={Paper}>
