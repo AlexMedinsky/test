@@ -6,6 +6,7 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import TextField from '@material-ui/core/TextField';
 import { Button, TableCell } from '@material-ui/core';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
@@ -27,7 +28,9 @@ export default function FiltrPanel(props) {
       <ExpansionPanel>
         <ExpansionPanelSummary 
           aria-controls="panel1a-content"
-          id="panel1a-header">
+          id="panel1a-header"
+          expandIcon={<ExpandMoreIcon />}
+        >
             <FormControlLabel
                 control={<Checkbox /*checked={gilad}*/ onChange={props.onCheckFilterButton} value="filter" color="default"/>}
                 label="Фильтр"
