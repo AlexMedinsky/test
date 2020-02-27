@@ -70,7 +70,7 @@ export default function CustomizedTables(props) {
                                                             <StyledTableCell align="left">
                                                                 {row.id>0 ? <MyCheckbox
                                                                                 checked={row.completed}
-                                                                                onChange={()=>{ handleChexBoxChange(ind); 
+                                                                                onChange={()=>{ handleChexBoxChange(row.id); 
                                                                                                 setChanged(!changed)}
                                                                                               }
                                                                                 value="myCheckedBox"

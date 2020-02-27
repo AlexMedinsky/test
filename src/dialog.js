@@ -64,14 +64,11 @@ const DialogActions = withStyles(theme => ({
 }))(MuiDialogActions);
 
 let current_toDo = [];
-function handleChexBoxChange(ind)
+function handleChexBoxChange(toDo_id)
 {
-  if(ind < 0 || ind >= current_toDo.length || !current_toDo[ind])
-  {
-    alert("Error index bound!");
-    return;
-  }
-  current_toDo[ind].completed = !(current_toDo[ind].completed);
+    let ind = current_toDo.findIndex(e=>e.id===toDo_id);
+    if(ind >=0 )
+      current_toDo[ind].completed = !(current_toDo[ind].completed);
 }
 
 export default function SimpleDialog(props) 
