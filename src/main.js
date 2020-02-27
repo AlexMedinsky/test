@@ -22,9 +22,12 @@ class Main extends Component
 								sel_user_name: null,
 								sel_user_toDo: null,
 								handleOnClick: this.handleOnTableClick,
-								dialogOpened: false
+								dialogOpened: false,
+								filterByName: null,
+								filterByWeb: null
 				   			 }
 				this.handleOnTableClick = this.handleOnTableClick.bind(this)
+				this.onCheckFilterButton = this.onCheckFilterButton.bind(this)
 				this.onResetFiltrs = this.onResetFiltrs.bind(this)
 				this.onApplyFiltrs = this.onApplyFiltrs.bind(this)
 				this.onDialogClose = this.onDialogClose.bind(this)
@@ -83,9 +86,7 @@ class Main extends Component
 	}
 
 	/*componentDidUpdate()
-	{
-		alert("componentDidUpdate: sel_user_id="+this.state.sel_user_id);
-	}
+	{}
 	*/
 
 	componentDidMount()
@@ -118,6 +119,7 @@ class Main extends Component
 			  );
 
 		ReactDOM.render(<FiltrPanel 
+									onCheckFilterButton={this.onCheckFilterButton}
 									onResetFiltrs={this.onResetFiltrs}
 									onApplyFiltrs={this.onApplyFiltrs}
 																		/>, document.querySelector('#filtr'));
@@ -146,23 +148,46 @@ class Main extends Component
 	{
 		document.getElementById("filtr_by_name").value = "";
 		document.getElementById("filtr_by_web").value = "";
-		this.setState( { rows: this.result_request } )
+		this.setState( 
+						{
+							filterByName: null,
+							filterByWeb: null,
+							rows: this.result_request 
+						} )
 	}
+	
 	onApplyFiltrs()
 	{
-		var filtrByName = document.getElementById("filtr_by_name").value.toLowerCase();
-		var filtrBySite = document.getElementById("filtr_by_web").value.toLowerCase();
-		/*if(!filtrByName && !filtrBySite)  
+		let filterByName = document.getElementById("filtr_by_name").value.toLowerCase();
+		let filterByWeb = document.getElementById("filtr_by_web").value.toLowerCase();
+		if(!filterByName && !filterByWeb)  
 		{
-			alert("необходимо указать фильтры!");
+			alert("Фильтры не заданы. Операция отменена.");
 			return;
-		}*/
+		}
 		
-		this.setState( { rows: this.result_request.filter( item => { return (!filtrByName || item.user_name.toLowerCase().indexOf(filtrByName) >=0 ) && 
-																			(!filtrBySite || item.website.toLowerCase().indexOf(filtrBySite) >=0) 
-																   }
-														 ) 
-					   } 
+		this.setState( { 	
+							filterByName: filterByName,
+							filterByWeb: filterByWeb,
+							rows: this.result_request.filter( item => 	{ return (!filterByName || item.user_name.toLowerCase().indexOf(filterByName) >=0 ) && 
+																				(!filterByWeb || item.website.toLowerCase().indexOf(filterByWeb) >=0) 
+																		}
+															) 
+						}
+					)
+	}
+
+	onCheckFilterButton(e)
+	{
+		const filterByName = this.state.filterByName;
+		const filterByWeb = this.state.filterByWeb;
+		
+		this.setState(  {  rows: !(e.target.checked) ?  this.result_request
+													 :  this.result_request.filter( item => { return (!filterByName || item.user_name.toLowerCase().indexOf(filterByName) >=0 ) && 
+																												(!filterByWeb || item.website.toLowerCase().indexOf(filterByWeb) >=0) 
+																							}
+																				 ) 
+						}
 					 )
 	}	
 }

@@ -10,12 +10,12 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
-import { green } from '@material-ui/core/colors';
+import { common } from '@material-ui/core/colors';
 
 const StyledTableCell = withStyles(theme => ({
   head: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
+    //backgroundColor: theme.palette.common.gray,
+    //color: theme.palette.common.white,
   },
   body: {
     fontSize: 14,
@@ -36,11 +36,11 @@ const useStyles = makeStyles({
   },
 });
 
-const GreenCheckbox = withStyles({
+const MyCheckbox = withStyles({
   root: {
-    color: green[400],
+    color: common[400],
     '&$checked': {
-      color: green[600],
+      color: common[600],
     },
   },
   checked: {},
@@ -49,6 +49,7 @@ const GreenCheckbox = withStyles({
 export default function CustomizedTables(props) {
   const classes = useStyles();
   const [changed, setChanged] = React.useState(false);
+  const { user_toDo, filter, handleChexBoxChange } = props;
 
   return (
     <TableContainer component={Paper}>
@@ -62,18 +63,18 @@ export default function CustomizedTables(props) {
         </TableHead>
         <TableBody>
           {
-              !props.user_toDo || !props.user_toDo.length ? "" :
-                  props.user_toDo.map( (row, ind)  => (
-                                                        <StyledTableRow key={row.name} /*onDoubleClick={()=>props.handleOnClick(row.user_id, row.user_name)} */>
+              !user_toDo || !user_toDo.length ? "" :
+                  (user_toDo.filter(e=> ( !(e.id>0) || filter===1 || (filter===2 && e.completed) || (filter===3 && !(e.completed))))).map( (row, ind)  => (
+                                                        <StyledTableRow key={row.name} /*onDoubleClick={()=>handleOnClick(row.user_id, row.user_name)} */>
                                                             <StyledTableCell align="center">{row.id> 0 ? ind+1 : null} </StyledTableCell>
                                                             <StyledTableCell style={row.completed? { textDecorationLine: 'line-through' } : null } align="left">{row.title} </StyledTableCell>
                                                             <StyledTableCell align="left">
-                                                                {row.id>0 ? <GreenCheckbox
+                                                                {row.id>0 ? <MyCheckbox
                                                                                 checked={row.completed}
-                                                                                onChange={()=>{ props.handleChexBoxChange(ind); 
+                                                                                onChange={()=>{ handleChexBoxChange(ind); 
                                                                                                 setChanged(!changed)}
                                                                                               }
-                                                                                value="checkedG"
+                                                                                value="myCheckedBox"
                                                                             />
                                                                           : ""}
                                                             </StyledTableCell>
