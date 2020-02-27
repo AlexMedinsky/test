@@ -66,7 +66,7 @@ export default function CustomizedTables(props) {
                   props.user_toDo.map( (row, ind)  => (
                                                         <StyledTableRow key={row.name} /*onDoubleClick={()=>props.handleOnClick(row.user_id, row.user_name)} */>
                                                             <StyledTableCell align="center">{row.id> 0 ? ind+1 : null} </StyledTableCell>
-                                                            <StyledTableCell align="left">{row.title} </StyledTableCell>
+                                                            <StyledTableCell style={row.completed? { textDecorationLine: 'line-through' } : null } align="left">{row.title} </StyledTableCell>
                                                             <StyledTableCell align="left">
                                                                 {row.id>0 ? <GreenCheckbox
                                                                                 checked={row.completed}

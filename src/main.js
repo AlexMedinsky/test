@@ -42,7 +42,7 @@ class Main extends Component
 			.then( response => response.json())
 			.then( json => { 
 								tmp_toDo = [];
-								json.map( (r) => { tmp_toDo.push(	{	
+								json.map( (r) => { return tmp_toDo.push(	{	
 																				id: r.id, 
 																				title: r.title,
 																				completed: r.completed																			}
@@ -50,7 +50,7 @@ class Main extends Component
 												}
 										);
 								if(!tmp_toDo.length)
-									tmp_toDo = [ {title: "ToDo`s list is empty."} ];			
+									tmp_toDo = [ {title: "Список задач для данного человека пуст.."} ];			
 								this.setState( { sel_user_toDo: tmp_toDo } );
 							}
 				)
@@ -134,7 +134,6 @@ class Main extends Component
 		  				{!this.state.dialogOpened ? "" : 
 												<MyDialog 
 													handleClose={this.onDialogClose}
-													user_id={this.state.sel_user_id}
 													user_name={this.state.sel_user_name}
 													user_toDo={this.state.sel_user_toDo}
 												/>

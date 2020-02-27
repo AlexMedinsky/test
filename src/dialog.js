@@ -27,6 +27,7 @@ const styles = theme => ({
   root: {
     margin: 0,
     padding: theme.spacing(2),
+    width: 'fit-content',
   },
   closeButton: {
     position: 'absolute',
@@ -53,6 +54,7 @@ const DialogTitle = withStyles(styles)(props => {
 const DialogContent = withStyles(theme => ({
   root: {
     padding: theme.spacing(2),
+    width: 'fit-content',
   },
 }))(MuiDialogContent);
 
@@ -76,12 +78,12 @@ function handleChexBoxChange(ind)
 
 export default function SimpleDialog(props) 
 {
-  const { handleClose, user_name, user_id, user_toDo } = props;
+  const { handleClose, user_name, user_toDo } = props;
   current_toDo = user_toDo;
 
   return (
-    <Dialog onClose={()=>{handleClose(current_toDo)}} aria-labelledby="customized-dialog-title" open="true">
-      <DialogTitle onClose={()=>{handleClose(current_toDo)}} id="customized-dialog-title">ToDo for {user_name}:</DialogTitle>
+    <Dialog maxWidth="500" onClose={()=>{handleClose(current_toDo)}} aria-labelledby="customized-dialog-title" open="true">
+      <DialogTitle onClose={()=>{handleClose(current_toDo)}} id="customized-dialog-title">Список задач для {user_name}:</DialogTitle>
       <DialogContent dividers>
        {/* <List
         {emails.map(email => (
